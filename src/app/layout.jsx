@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import SplashScreen from "@/components/ui/SplashScreen";
 import { site } from "@/data/site";
 
@@ -42,7 +44,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
-          <SplashScreen>{children}</SplashScreen>
+          <SplashScreen>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </SplashScreen>
         </ThemeProvider>
       </body>
     </html>
