@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ChatWidget from "@/components/chat/ChatWidget";
 import SplashScreen from "@/components/ui/SplashScreen";
 import { site } from "@/data/site";
 
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
+            <ChatWidget />
           </SplashScreen>
         </ThemeProvider>
       </body>
