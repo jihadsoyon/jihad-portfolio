@@ -5,16 +5,18 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/layout/ThemeToggle";
+import LanguageToggle from "@/components/i18n/LanguageToggle";
+import T from "@/components/i18n/T";
 import { site } from "@/data/site";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/skills", label: "Skills" },
-  { href: "/projects", label: "Projects" },
-  { href: "/services", label: "Service" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", en: "Home", bn: "হোম" },
+  { href: "/about", en: "About", bn: "পরিচয়" },
+  { href: "/skills", en: "Skills", bn: "দক্ষতা" },
+  { href: "/projects", en: "Projects", bn: "প্রজেক্ট" },
+  { href: "/services", en: "Service", bn: "সেবা" },
+  { href: "/blog", en: "Blog", bn: "ব্লগ" },
+  { href: "/contact", en: "Contact", bn: "যোগাযোগ" },
 ];
 
 export default function Navbar() {
@@ -50,13 +52,11 @@ export default function Navbar() {
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-fuchsia-500 font-bold text-white shadow-lg shadow-primary/30 transition group-hover:scale-105">
             JS
           </span>
-          <span className="hidden font-semibold text-foreground sm:block">
-            {site.name}
-          </span>
+          <T as="span" className="hidden font-semibold text-foreground sm:block" en={site.name} bn={site.name_bn} />
         </Link>
 
         {/* Desktop menu */}
-        <ul className="hidden items-center gap-1 rounded-full border border-border bg-card/70 p-1 backdrop-blur lg:flex">
+        <ul className="hidden items-center gap-1 rounded-full border border-border bg-card/70 p-1 backdrop-blur xl:flex">
           {links.map((link) => (
             <li key={link.href}>
               <Link
@@ -67,24 +67,25 @@ export default function Navbar() {
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >
-                {link.label}
+                <T en={link.en} bn={link.bn} />
               </Link>
             </li>
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <LanguageToggle />
           <ThemeToggle />
           <Link
             href="/contact"
             className="hidden rounded-full bg-foreground px-5 py-2 text-sm font-semibold text-background transition hover:opacity-80 md:inline-block"
           >
-            Hire me
+            <T en="Hire me" bn="কাজের জন্য যোগাযোগ" />
           </Link>
           <button
             onClick={() => setOpen((o) => !o)}
             aria-label="Toggle menu"
-            className="rounded-full border border-border p-2 text-foreground lg:hidden"
+            className="rounded-full border border-border p-2 text-foreground xl:hidden"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -93,7 +94,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="border-t border-border bg-background/95 backdrop-blur-xl lg:hidden">
+        <div className="border-t border-border bg-background/95 backdrop-blur-xl xl:hidden">
           <ul className="mx-auto flex max-w-6xl flex-col gap-1 p-4">
             {links.map((link) => (
               <li key={link.href}>
@@ -105,7 +106,7 @@ export default function Navbar() {
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
                 >
-                  {link.label}
+                  <T en={link.en} bn={link.bn} />
                 </Link>
               </li>
             ))}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Mail } from "lucide-react";
 import { Github, Linkedin } from "@/components/ui/BrandIcons";
+import T from "@/components/i18n/T";
 import { site } from "@/data/site";
 
 const fadeUp = {
@@ -14,6 +15,13 @@ const fadeUp = {
     transition: { delay: i * 0.12, duration: 0.6, ease: "easeOut" },
   }),
 };
+
+const reveal = (i) => ({
+  variants: fadeUp,
+  initial: "hidden",
+  animate: "show",
+  custom: i,
+});
 
 export default function Hero() {
   return (
@@ -37,64 +45,40 @@ export default function Hero() {
         {/* Left: text */}
         <div>
           <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
+            {...reveal(0)}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-1.5 text-sm text-muted-foreground backdrop-blur"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
-            Open to remote opportunities
+            <T en="Open to remote opportunities" bn="রিমোট কাজের জন্য উন্মুক্ত" />
           </motion.span>
 
-          <motion.h1
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={1}
-            className="mt-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl"
-          >
-            Hi, I&apos;m{" "}
-            <span className="bg-gradient-to-r from-primary to-fuchsia-500 bg-clip-text text-transparent">
-              {site.name}
-            </span>
+          <motion.h1 {...reveal(1)} className="mt-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl">
+            <T en="Hi, I'm" bn="আসসালামু আলাইকুম, আমি" />{" "}
+            <T
+              as="span"
+              className="bg-gradient-to-r from-primary to-fuchsia-500 bg-clip-text text-transparent"
+              en={site.name}
+              bn={site.name_bn}
+            />
           </motion.h1>
 
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={2}
-            className="mt-4 text-xl font-medium text-primary"
-          >
-            {site.designation}
+          <motion.p {...reveal(2)} className="mt-4 text-xl font-medium text-primary">
+            <T en={site.designation} bn={site.designation_bn} />
           </motion.p>
 
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={3}
-            className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground"
-          >
-            {site.tagline}
+          <motion.p {...reveal(3)} className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            <T en={site.tagline} bn={site.tagline_bn} />
           </motion.p>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={4}
-            className="mt-8 flex flex-wrap gap-4"
-          >
+          <motion.div {...reveal(4)} className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/projects"
               className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-primary/30 transition hover:scale-105"
             >
-              View Projects
+              <T en="View Projects" bn="প্রজেক্ট দেখুন" />
               <ArrowRight size={18} className="transition group-hover:translate-x-1" />
             </Link>
             <Link
@@ -102,17 +86,11 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold text-foreground transition hover:bg-muted"
             >
               <Mail size={18} />
-              Contact me
+              <T en="Contact me" bn="যোগাযোগ করুন" />
             </Link>
           </motion.div>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={5}
-            className="mt-8 flex items-center gap-3"
-          >
+          <motion.div {...reveal(5)} className="mt-8 flex items-center gap-3">
             <a
               href={site.github}
               target="_blank"
