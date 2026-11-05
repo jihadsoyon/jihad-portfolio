@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import { Github } from "@/components/ui/BrandIcons";
 import BackToHome from "@/components/layout/BackToHome";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
 
