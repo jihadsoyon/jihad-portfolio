@@ -8,6 +8,24 @@ export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  if (!post) return {};
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      publishedTime: post.date,
+      images: post.image ? [post.image] : [],
+    },
+  };
+}
+
 export default async function ArticlePage({ params }) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
