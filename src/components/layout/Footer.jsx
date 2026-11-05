@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Github, Linkedin, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
+import { Github, Linkedin } from "@/components/ui/BrandIcons";
 import { site } from "@/data/site";
 
 export default function Footer() {

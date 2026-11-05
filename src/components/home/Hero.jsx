@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
+import { Github, Linkedin } from "@/components/ui/BrandIcons";
 import { site } from "@/data/site";
 
 const fadeUp = {
