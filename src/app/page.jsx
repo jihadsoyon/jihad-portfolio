@@ -3,6 +3,7 @@ import AboutPreview from "@/components/home/AboutPreview";
 import Experience from "@/components/home/Experience";
 import SkillsPreview from "@/components/home/SkillsPreview";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
+import ArticlesPreview from "@/components/home/ArticlesPreview";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <Experience />
       <SkillsPreview />
       <FeaturedProjects />
+      <ArticlesPreview />
     </>
   );
 }
