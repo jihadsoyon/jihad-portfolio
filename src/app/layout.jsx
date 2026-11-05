@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
@@ -15,6 +15,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const bengali = Noto_Sans_Bengali({
+  variable: "--font-bengali",
+  subsets: ["bengali", "latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -43,7 +49,7 @@ export const metadata = {
   },
 };
 
-// পেজ paint হওয়ার আগেই dark class বসানো, যাতে flash না হয়
+// পেজ paint হওয়ার আগেই theme ও ভাষা ঠিক করা, যাতে flash না হয়
 const themeScript = `
 (function () {
   try {
@@ -54,15 +60,30 @@ const themeScript = `
 })();
 `;
 
+const langScript = `
+(function () {
+  try {
+    var l = localStorage.getItem('lang');
+    if (l === 'bn') {
+      var h = document.documentElement;
+      h.classList.remove('lang-en');
+      h.classList.add('lang-bn');
+      h.lang = 'bn';
+    }
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${bengali.variable} lang-en h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: langScript }} />
       </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
