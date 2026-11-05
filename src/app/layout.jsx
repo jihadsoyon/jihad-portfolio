@@ -18,8 +18,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: `${site.name} | ${site.designation}`,
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} | ${site.designation}`,
+    template: `%s | ${site.name}`,
+  },
   description: site.tagline,
+  keywords: ["MERN Stack", "Next.js", "React", "Node.js", "Portfolio", "Jihad Soyon"],
+  authors: [{ name: site.name }],
+  openGraph: {
+    title: `${site.name} | ${site.designation}`,
+    description: site.tagline,
+    url: site.url,
+    siteName: site.name,
+    locale: "en_US",
+    type: "website",
+    images: ["/images/og-image.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} | ${site.designation}`,
+    description: site.tagline,
+    images: ["/images/og-image.jpg"],
+  },
 };
 
 // পেজ paint হওয়ার আগেই dark class বসানো, যাতে flash না হয়
