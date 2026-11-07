@@ -56,3 +56,47 @@ html.lang-bn .lang-en {
 html.lang-bn body {
   font-family: var(--font-bengali), ui-sans-serif, system-ui, sans-serif;
 }
+
+
+
+/* ---------- Print: resume শুধু কাগজে সুন্দর দেখাবে ---------- */
+.no-print {
+  display: block;
+}
+
+@media print {
+  html,
+  html.dark {
+    --background: #ffffff;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --muted: #f1f5f9;
+    --muted-foreground: #475569;
+    --border: #e2e8f0;
+    --primary: #4f46e5;
+    --primary-foreground: #ffffff;
+    color-scheme: light;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  header,
+  footer,
+  .fixed,
+  .no-print {
+    display: none !important;
+  }
+
+  .resume-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+  }
+
+  .resume-sheet * {
+    text-shadow: none !important;
+  }
+}
