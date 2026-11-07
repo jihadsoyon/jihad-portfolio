@@ -5,6 +5,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ChatWidget from "@/components/chat/ChatWidget";
 import RouteProgress from "@/components/ui/RouteProgress";
+import SplashScreen from "@/components/ui/SplashScreen";
+import SplashStyles from "@/components/ui/SplashStyles";
 import { site } from "@/data/site";
 
 const geistSans = Geist({
@@ -49,17 +51,18 @@ export const metadata = {
   },
 };
 
-// CSS আসার আগেই background ঠিক থাকে, তাই সাদা পর্দা আসে না
+// CSS আসার আগেই background ঠিক থাকে
 const criticalCss = `
 html { background: #ffffff; color-scheme: light; }
 html.dark { background: #0b0f1a; color-scheme: dark; }
 `;
 
-// Theme ও ভাষা paint-এর আগেই একবারে ঠিক হয়
+// Theme, ভাষা ও splash, তিনটিই paint-এর আগে ঠিক হয়
 const initScript = `
 (function () {
   try {
     var html = document.documentElement;
+
     var t = localStorage.getItem('theme');
     if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     html.classList.toggle('dark', t === 'dark');
@@ -71,6 +74,13 @@ const initScript = `
       html.classList.add('lang-bn');
       html.lang = 'bn';
     }
+
+    // নতুন tab/window-তে প্রথমবার খুললে splash; reload, back বা পরের page-এ নয়
+    var nav = performance.getEntriesByType('navigation')[0];
+    var freshVisit = !nav || nav.type === 'navigate';
+    var seen = sessionStorage.getItem('splash-seen') === '1';
+    if (!freshVisit || seen) html.classList.add('splash-skip');
+    sessionStorage.setItem('splash-seen', '1');
   } catch (e) {}
 })();
 `;
@@ -84,10 +94,12 @@ export default function RootLayout({ children }) {
     >
       <head>
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
+        <SplashStyles />
         <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
+          <SplashScreen />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
