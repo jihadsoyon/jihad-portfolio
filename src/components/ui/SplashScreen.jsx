@@ -1,3 +1,4 @@
+
 import T from "@/components/i18n/T";
 import { site } from "@/data/site";
 
@@ -10,6 +11,9 @@ export default function SplashScreen() {
       <div className="splash-glow splash-glow-b" />
 
       <div className="splash-photo">
+        <span className="splash-spark splash-spark-1" />
+        <span className="splash-spark splash-spark-2" />
+        <span className="splash-spark splash-spark-3" />
         <span className="splash-orbit" />
         <span className="splash-ring" />
         <div className="splash-photo-inner">
@@ -22,7 +26,7 @@ export default function SplashScreen() {
           <span
             key={i}
             className="splash-letter"
-            style={{ animationDelay: `${0.5 + i * 0.05}s` }}
+            style={{ animationDelay: `${0.5 + i * 0.05}s, ${1.6 + i * 0.05}s` }}
           >
             {ch === " " ? "\u00A0" : ch}
           </span>
@@ -34,6 +38,8 @@ export default function SplashScreen() {
       <div className="splash-track">
         <span className="splash-bar" />
       </div>
+
+      <div className="splash-flash" />
     </div>
   );
 }
