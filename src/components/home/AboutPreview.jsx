@@ -1,23 +1,18 @@
+import AboutVideo from "@/components/home/AboutVideo";
 import { about } from "@/data/about";
+
+const ABOUT_THUMBNAIL = "/images/about-thumbnail.png";
 
 export default function AboutPreview() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-24">
       <div className="grid items-center gap-12 md:grid-cols-2">
-        {/* বাম পাশে video */}
-        <div className="group relative overflow-hidden rounded-3xl border border-border bg-card shadow-2xl">
-          <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-primary/40 via-transparent to-fuchsia-500/40 opacity-60 transition group-hover:opacity-100" />
-          <div className="relative aspect-video">
-            <iframe
-              className="h-full w-full rounded-3xl"
-              src={`https://www.youtube.com/embed/${about.youtubeId}`}
-              title="About Jihad Soyon"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
+        {/* বাম পাশে thumbnail, click করলে video */}
+        <AboutVideo
+          videoId={about.youtubeId}
+          thumbnail={ABOUT_THUMBNAIL}
+          title="About Jihad Soyon"
+        />
 
         {/* ডান পাশে text */}
         <div>

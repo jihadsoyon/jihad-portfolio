@@ -1,10 +1,8 @@
 export const about = {
   // YouTube video-এর ID। URL: https://www.youtube.com/watch?v=XXXXXXXXXXX হলে ID হলো XXXXXXXXXXX
-  youtubeId: "YOUR_YOUTUBE_ID", // TODO: আপনার about video-এর ID দিন
-  title: "আমার সম্পর্কে",
+  youtubeId: "RmgJ8kmgQbw", // TODO: আপনার about video-এর ID দিন
+  title: "About Myself",
   paragraphs: [
-    "আমি Jihad Soyon, বাংলাদেশ থেকে একজন MERN Stack Developer। Next.js, React ও Node.js দিয়ে পুরো web application তৈরি করতে ভালোবাসি।",
-    "আমার লক্ষ্য হলো এমন product বানানো যা দ্রুত, নিরাপদ ও ব্যবহারকারীর জন্য সহজ। প্রতিটি project-এ আমি code quality, performance ও deployment-এর দিকে বিশেষ মনোযোগ দিই।",
-    "এখন আমি remote job খুঁজছি এবং ভবিষ্যতে নিজের একটি software agency গড়ে তোলার পরিকল্পনা করছি।",
+    "I'm Jihad Soyon — a MERN Stack Developer who builds modern, responsive, and scalable web applications with a sharp focus on clean UI and real-world performance.I work with React, Next.js, Node.js, MongoDB, and TypeScript — and I bring professional experience in SEO & Online Reputation Management that gives me a unique edge in building products that are found, trusted, and used. I'm collaborative, async-friendly, and treat every project like it's my own.",
   ],
 };
