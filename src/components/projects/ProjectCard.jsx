@@ -3,7 +3,8 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowUpRight, Github, Globe } from "lucide-react";
+import { ArrowUpRight, Globe } from "lucide-react";
+import { Github } from "@/components/ui/BrandIcons";
 import T from "@/components/i18n/T";
 
 // MDX-এর accent নাম থেকে gradient। Tailwind এই class গুলো দেখতে পাবে কারণ এখানে লেখা আছে।
