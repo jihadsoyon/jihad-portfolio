@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ChatWidget from "@/components/chat/ChatWidget";
 import SplashScreen from "@/components/ui/SplashScreen";
+import RouteProgress from "@/components/ui/RouteProgress";
 import { site } from "@/data/site";
 
 const geistSans = Geist({
@@ -104,6 +105,7 @@ export default function RootLayout({ children }) {
             <main className="flex-1">{children}</main>
             <Footer />
             <ChatWidget />
+            <RouteProgress />
           </SplashScreen>
         </ThemeProvider>
       </body>
