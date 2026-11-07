@@ -4,7 +4,7 @@ export const experiences = [
     role: "ORM & SEO Specialist",
     company: "Aan-Nahl Software",
     type: "Freelance",
-    location: "Remote",
+    location: "Onsite",
     period: "Nov 2023 – May 2025",
     duration: "1 Year 6 Months",
     summary:
