@@ -1,6 +1,9 @@
 import { Code2, Layout, Rocket, Server } from "lucide-react";
 import BackToHome from "@/components/layout/BackToHome";
-
+export const metadata = {
+  title: "Services",
+  description: "Jihad Soyon-এর web development সেবা।",
+};
 const services = [
   {
     icon: Layout,

@@ -2,6 +2,11 @@ import BackToHome from "@/components/layout/BackToHome";
 import ProjectCard from "@/components/projects/ProjectCard";
 import { getAllProjects } from "@/lib/projects";
 
+export const metadata = {
+  title: "Projects",
+  description: "Jihad Soyon-এর সব project ও case study।",
+};
+
 export default function ProjectsPage() {
   const projects = getAllProjects();
 

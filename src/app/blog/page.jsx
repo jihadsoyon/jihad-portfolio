@@ -2,6 +2,11 @@ import BackToHome from "@/components/layout/BackToHome";
 import BlogCard from "@/components/blog/BlogCard";
 import { getAllPosts } from "@/lib/blog";
 
+export const metadata = {
+  title: "Blog",
+  description: "Development ও project নিয়ে লেখা।",
+};
+
 export default function BlogPage() {
   const posts = getAllPosts();
 
