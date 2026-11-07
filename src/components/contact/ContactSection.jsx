@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Facebook, Github, Linkedin, WhatsApp } from "@/components/ui/BrandIcons";
 import { Mail } from "lucide-react";
+import { Facebook, WhatsApp } from "@/components/ui/BrandIcons";
 import ContactForm from "@/components/contact/ContactForm";
 import { site } from "@/data/site";
 
@@ -33,7 +33,6 @@ const channels = [
   },
 ];
 
-// Glass panel যা mouse-কে অনুসরণ করে আলো ছড়ায়
 function GlassPanel({ children, className = "" }) {
   const ref = useRef(null);
   const x = useMotionValue(50);
@@ -62,7 +61,7 @@ function GlassPanel({ children, className = "" }) {
   );
 }
 
-export default function ContactSection() {
+export default function ContactSection({ presetInquiry = "", presetPackage = "" }) {
   return (
     <section className="relative isolate overflow-hidden px-6 py-28">
       <div className="pointer-events-none absolute -left-40 top-1/3 -z-10 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,var(--primary)_0%,transparent_65%)] opacity-10" />
@@ -70,7 +69,6 @@ export default function ContactSection() {
 
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
-          {/* বাম: তথ্য ও channel */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -78,6 +76,12 @@ export default function ContactSection() {
             transition={{ duration: 0.7 }}
             className="lg:col-span-2"
           >
+            {presetPackage && (
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+                Discussing: {presetPackage}
+              </p>
+            )}
+
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground backdrop-blur">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -105,7 +109,7 @@ export default function ContactSection() {
                   {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className={`group/ch flex items-center gap-4 rounded-2xl border border-border bg-card/60 px-4 py-3 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-lg ${hover}`}
                 >
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted text-muted-foreground transition duration-300 group-hover/ch:scale-110 group-hover/ch:text-inherit">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted text-muted-foreground transition duration-300 group-hover/ch:scale-110">
                     <Icon size={18} />
                   </span>
                   <span className="min-w-0">
@@ -119,7 +123,6 @@ export default function ContactSection() {
             </div>
           </motion.div>
 
-          {/* ডান: form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -128,7 +131,7 @@ export default function ContactSection() {
             className="lg:col-span-3"
           >
             <GlassPanel className="p-8 md:p-10">
-              <ContactForm />
+              <ContactForm presetInquiry={presetInquiry} presetPackage={presetPackage} />
             </GlassPanel>
           </motion.div>
         </div>
