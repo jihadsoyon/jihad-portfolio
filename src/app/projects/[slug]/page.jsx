@@ -3,6 +3,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { ExternalLink } from "lucide-react";
 import { Github } from "@/components/ui/BrandIcons";
 import BackToHome from "@/components/layout/BackToHome";
+import ProjectVideo from "@/components/projects/ProjectVideo";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -39,7 +40,9 @@ export default async function ProjectDetailPage({ params }) {
         <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
           {project.title}
         </h1>
-        <p className="mt-4 text-lg text-muted-foreground">{project.description}</p>
+        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+          {project.description}
+        </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {project.tech?.map((t) => (
@@ -77,18 +80,11 @@ export default async function ProjectDetailPage({ params }) {
       </header>
 
       {project.video && (
-        <div className="mt-10 overflow-hidden rounded-3xl border border-border bg-card shadow-2xl">
-          <div className="aspect-video">
-            <iframe
-              className="h-full w-full"
-              src={`https://www.youtube.com/embed/${project.video}`}
-              title={project.title}
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
+        <ProjectVideo
+          videoId={project.video}
+          title={project.title}
+          thumbnail={project.thumbnail}
+        />
       )}
 
       <div className="mt-12 space-y-4 text-lg leading-relaxed text-muted-foreground [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-foreground [&_li]:ml-6 [&_li]:list-disc [&_a]:text-primary [&_a]:underline">
