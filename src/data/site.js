@@ -10,7 +10,9 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   whatsapp: "8801723889959",
   whatsappLink: "https://wa.me/8801723889959",
+  phoneDisplay: "+880 1723-889959",
   email: "jihadsoyon@gmail.com",
   github: "https://github.com/jihadsoyon",
   linkedin: "https://www.linkedin.com/in/jihad-soyon/",
+  facebook: "https://www.facebook.com/jihad.soyon/",
 };
