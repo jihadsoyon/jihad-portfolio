@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 import Logo from "@/components/layout/Logo";
-import LanguageToggle from "@/components/i18n/LanguageToggle";
 import T from "@/components/i18n/T";
 
 const links = [
@@ -84,7 +83,6 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <LanguageToggle />
           <ThemeToggle />
 
           <Link

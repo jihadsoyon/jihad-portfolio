@@ -58,7 +58,8 @@ export const aboutStory = {
   ],
 
   currently: {
-    en: "Looking for a remote role, and planning to build my own software agency.",
-    bn: "এখন remote job খুঁজছি, আর ভবিষ্যতে নিজের একটি software agency গড়ার পরিকল্পনা আছে।",
+    en: "Exploring remote opportunities and crafting scalable web applications.",
+    bn: "এখন remote কাজের সুযোগ খুঁজছি এবং আধুনিক ও স্কেলেবল web application তৈরি করছি।",
   },
+
 };

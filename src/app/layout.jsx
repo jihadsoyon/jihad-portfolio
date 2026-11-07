@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Noto_Sans_Bengali } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
@@ -17,12 +17,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-const bengali = Noto_Sans_Bengali({
-  variable: "--font-bengali",
-  subsets: ["bengali", "latin"],
-  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -57,7 +51,7 @@ html { background: #ffffff; color-scheme: light; }
 html.dark { background: #0b0f1a; color-scheme: dark; }
 `;
 
-// Theme, ভাষা ও splash, তিনটিই paint-এর আগে ঠিক হয়
+// Theme ও splash paint-এর আগেই ঠিক হয়। ভাষা সবসময় English।
 const initScript = `
 (function () {
   try {
@@ -68,14 +62,6 @@ const initScript = `
     html.classList.toggle('dark', t === 'dark');
     html.style.colorScheme = t;
 
-    var l = localStorage.getItem('lang');
-    if (l === 'bn') {
-      html.classList.remove('lang-en');
-      html.classList.add('lang-bn');
-      html.lang = 'bn';
-    }
-
-    // নতুন tab/window-তে প্রথমবার খুললে splash; reload, back বা পরের page-এ নয়
     var nav = performance.getEntriesByType('navigation')[0];
     var freshVisit = !nav || nav.type === 'navigate';
     var seen = sessionStorage.getItem('splash-seen') === '1';
@@ -90,7 +76,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${bengali.variable} lang-en h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} lang-en h-full antialiased`}
     >
       <head>
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
