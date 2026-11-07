@@ -121,7 +121,7 @@ export default function Hero() {
         >
           <div className="rounded-3xl bg-gradient-to-br from-primary via-fuchsia-500 to-cyan-400 p-[2px] shadow-2xl shadow-primary/30">
             <img
-              src="/images/jihad.jpg"
+              src="/images/jihad.png"
               alt={site.name}
               className="aspect-[4/5] w-full rounded-3xl object-cover"
             />
