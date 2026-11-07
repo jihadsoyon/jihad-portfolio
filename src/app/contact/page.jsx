@@ -1,23 +1,19 @@
+import { Suspense } from "react";
 import BackToHome from "@/components/layout/BackToHome";
-import ContactSection from "@/components/contact/ContactSection";
-import { getServiceBySlug } from "@/data/services";
+import ContactPageContent from "@/components/contact/ContactPageContent";
 
 export const metadata = {
   title: "Contact",
   description: "Jihad Soyon-এর সাথে যোগাযোগ করুন।",
 };
 
-export default async function ContactPage({ searchParams }) {
-  const { service: slug } = await searchParams;
-  const service = getServiceBySlug(slug);
-
+export default function ContactPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 pt-32">
       <BackToHome />
-      <ContactSection
-        presetInquiry={service?.inquiry ?? ""}
-        presetPackage={service?.title ?? ""}
-      />
+      <Suspense fallback={null}>
+        <ContactPageContent />
+      </Suspense>
     </div>
   );
 }
