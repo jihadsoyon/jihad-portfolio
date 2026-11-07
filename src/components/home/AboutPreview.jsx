@@ -1,126 +1,164 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Code2, Rocket, Sparkles } from "lucide-react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Code2, MapPin, Rocket, Sparkles } from "lucide-react";
 import AboutVideo from "@/components/home/AboutVideo";
 import T from "@/components/i18n/T";
 import { about } from "@/data/about";
+import { resume } from "@/data/resume";
 
 const ABOUT_THUMBNAIL = "/images/about-thumbnail.png";
 
-const chapters = [
-  { icon: Sparkles, en: "Who I am", bn: "আমি কে" },
-  { icon: Code2, en: "What I build", bn: "আমি কী বানাই" },
-  { icon: Rocket, en: "What's next", bn: "সামনে কী" },
+const facts = [
+  { icon: MapPin, en: "Based in", bn: "অবস্থান", value: resume.location },
+  { icon: Rocket, en: "Availability", bn: "উপলব্ধতা", value: "Open to remote" },
+  { icon: Code2, en: "Focus", bn: "মূল দক্ষতা", value: "MERN · Next.js" },
+  { icon: Sparkles, en: "Experience", bn: "অভিজ্ঞতা", value: "1+ years" },
 ];
 
-const techChips = ["React", "Next.js", "Node.js", "MongoDB", "TypeScript"];
+const techs = ["React", "Next.js", "Node.js", "Express", "MongoDB", "TypeScript", "Tailwind CSS", "Vercel"];
 
-const stagger = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.15 } },
-};
+// একটা শব্দ, scroll অনুযায়ী আস্তে উজ্জ্বল হবে
+function Word({ children, progress, index, total }) {
+  const start = index / total;
+  const end = start + 1 / total;
+  const opacity = useTransform(progress, [start, end], [0.15, 1]);
+  return (
+    <motion.span style={{ opacity }} className="mr-[0.3em] inline-block">
+      {children}
+    </motion.span>
+  );
+}
 
-const rise = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
+function ScrollText({ text }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 85%", "end 45%"],
+  });
+
+  const words = text.split(/\s+/).filter(Boolean);
+
+  return (
+    <p ref={ref} className="text-xl leading-relaxed text-foreground md:text-2xl md:leading-[1.7]">
+      {words.map((w, i) => (
+        <Word key={i} index={i} total={words.length} progress={scrollYProgress}>
+          {w}
+        </Word>
+      ))}
+    </p>
+  );
+}
+
+function TechMarquee() {
+  const items = [...techs, ...techs];
+  return (
+    <div className="relative mt-14 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+      <motion.div
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+        className="flex w-max gap-4"
+      >
+        {items.map((t, i) => (
+          <span
+            key={i}
+            className="whitespace-nowrap rounded-full border border-border bg-card/60 px-5 py-2 text-sm font-semibold text-muted-foreground backdrop-blur"
+          >
+            {t}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
 
 export default function AboutPreview() {
-  return (
-    <section className="relative mx-auto max-w-6xl px-6 py-24">
-      {/* পেছনের হালকা আলো */}
-      <div className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,var(--primary)_0%,transparent_70%)] opacity-20" />
+  const fullText = about.paragraphs.join(" ");
 
-      <div className="grid items-center gap-16 md:grid-cols-2">
-        {/* বাম পাশে video */}
+  return (
+    <section className="relative isolate overflow-hidden mx-auto max-w-6xl px-6 py-28">
+      {/* পেছনের বড় outline শব্দ */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -top-6 left-0 select-none text-[7rem] font-black uppercase leading-none tracking-tighter text-transparent md:text-[11rem]"
+        style={{ WebkitTextStroke: "1px var(--border)" }}
+      >
+        About
+      </span>
+
+      <div className="relative grid items-center gap-16 md:grid-cols-2">
+        {/* বাম: video */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -40, rotate: -2 }}
+          whileInView={{ opacity: 1, x: 0, rotate: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative"
         >
+          <div className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-[radial-gradient(circle,var(--primary)_0%,transparent_70%)] opacity-20 blur-xl" />
           <AboutVideo videoId={about.youtubeId} thumbnail={ABOUT_THUMBNAIL} title="About Jihad Soyon" />
         </motion.div>
 
-        {/* ডান পাশে chapter cards */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-        >
+        {/* ডান: heading, scroll text, facts */}
+        <div>
           <motion.span
-            variants={rise}
-            className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-primary"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-primary"
           >
-            <span className="h-px w-8 bg-gradient-to-r from-primary to-fuchsia-500" />
+            <span className="h-px w-10 bg-gradient-to-r from-primary to-fuchsia-500" />
             <T en="About" bn="পরিচয়" />
           </motion.span>
 
           <motion.h2
-            variants={rise}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="mt-4 text-4xl font-bold tracking-tight md:text-5xl"
           >
-            <span className="bg-gradient-to-r from-foreground via-primary to-fuchsia-500 bg-clip-text text-transparent">
-              {about.title}
+            <span className="text-foreground">About </span>
+            <span className="bg-gradient-to-r from-primary via-fuchsia-500 to-cyan-400 bg-clip-text text-transparent">
+              Myself
             </span>
           </motion.h2>
 
-          <ol className="mt-10 space-y-4">
-            {chapters.map((c, i) => {
-              const Icon = c.icon;
-              const text = about.paragraphs[i];
-              if (!text) return null;
+          <div className="mt-8">
+            <ScrollText text={fullText} />
+          </div>
 
+          <div className="mt-10 grid grid-cols-2 gap-3">
+            {facts.map((f, i) => {
+              const Icon = f.icon;
               return (
-                <motion.li
-                  key={c.en}
-                  variants={rise}
-                  className="group relative overflow-hidden rounded-2xl border border-border bg-card/60 p-5 backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10"
+                <motion.div
+                  key={f.en}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="group rounded-2xl border border-border bg-card/60 p-4 backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-primary/50"
                 >
-                  {/* বাঁ দিকের gradient bar, hover-এ জ্বলে */}
-                  <span className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary to-fuchsia-500 opacity-0 transition duration-300 group-hover:opacity-100" />
-
-                  <div className="flex gap-5">
-                    <span
-                      className="select-none font-mono text-3xl font-extrabold leading-none text-transparent"
-                      style={{ WebkitTextStroke: "1px var(--primary)" }}
-                    >
-                      0{i + 1}
-                    </span>
-
-                    <div>
-                      <div className="flex items-center gap-2 text-primary">
-                        <Icon size={14} />
-                        <T
-                          as="span"
-                          className="text-xs font-semibold uppercase tracking-widest"
-                          en={c.en}
-                          bn={c.bn}
-                        />
-                      </div>
-                      <p className="mt-2 leading-relaxed text-muted-foreground">{text}</p>
-                    </div>
+                  <div className="flex items-center gap-2 text-primary">
+                    <Icon size={14} />
+                    <T
+                      as="span"
+                      className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+                      en={f.en}
+                      bn={f.bn}
+                    />
                   </div>
-                </motion.li>
+                  <p className="mt-2 text-sm font-semibold text-foreground">{f.value}</p>
+                </motion.div>
               );
             })}
-          </ol>
-
-          {/* প্রযুক্তির chip, এক এক করে আসবে */}
-          <motion.ul variants={rise} className="mt-8 flex flex-wrap gap-2">
-            {techChips.map((tech) => (
-              <li
-                key={tech}
-                className="rounded-full border border-border bg-background px-3 py-1.5 text-sm text-muted-foreground transition hover:-translate-y-0.5 hover:border-primary hover:text-primary"
-              >
-                {tech}
-              </li>
-            ))}
-          </motion.ul>
-        </motion.div>
+          </div>
+        </div>
       </div>
+
+      <TechMarquee />
     </section>
   );
 }
