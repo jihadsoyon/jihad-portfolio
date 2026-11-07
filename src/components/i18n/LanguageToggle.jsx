@@ -25,7 +25,7 @@ export default function LanguageToggle() {
       aria-label="Change language"
       className="rounded-full border border-border px-3 py-2 text-sm font-semibold text-foreground transition hover:bg-muted"
     >
-      {lang === "en" ? "বাংলা" : "EN"}
+      {lang === "en" ? "BN" : "EN"}
     </button>
   );
 }
