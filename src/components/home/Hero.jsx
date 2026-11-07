@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { ArrowRight, FileText } from "lucide-react";
 import { Github, Linkedin } from "@/components/ui/BrandIcons";
+import PhotoStage from "@/components/home/PhotoStage";
 import T from "@/components/i18n/T";
 import { site } from "@/data/site";
 
@@ -44,12 +45,6 @@ export default function Hero() {
   const spotY = useSpring(mouseY, { stiffness: 120, damping: 20 });
   const spotlight = useMotionTemplate`radial-gradient(600px circle at ${spotX}px ${spotY}px, rgba(129,140,248,0.18), transparent 70%)`;
 
-  // Photo 3D tilt
-  const rotX = useMotionValue(0);
-  const rotY = useMotionValue(0);
-  const tiltX = useSpring(rotX, { stiffness: 150, damping: 15 });
-  const tiltY = useSpring(rotY, { stiffness: 150, damping: 15 });
-
   // Role rotation
   const [roleIndex, setRoleIndex] = useState(0);
   useEffect(() => {
@@ -63,28 +58,12 @@ export default function Hero() {
     mouseY.set(e.clientY - rect.top);
   };
 
-  const onPhotoMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    rotY.set(px * 14);
-    rotX.set(-py * 14);
-  };
-
-  const onPhotoLeave = () => {
-    rotX.set(0);
-    rotY.set(0);
-  };
-
   return (
     <section onMouseMove={onSectionMove} className="relative isolate overflow-hidden">
       {/* Background */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[size:48px_48px] bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
-        <motion.div
-          style={{ background: spotlight }}
-          className="absolute inset-0"
-        />
+        <motion.div style={{ background: spotlight }} className="absolute inset-0" />
         <motion.div
           animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
@@ -124,7 +103,6 @@ export default function Hero() {
             />
           </motion.h1>
 
-          {/* Rotating role */}
           <motion.div {...reveal(2)} className="mt-4 h-8 overflow-hidden text-xl font-medium text-primary">
             <AnimatePresence mode="wait">
               <motion.div
@@ -182,50 +160,8 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right: 3D tilt photo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          style={{ rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 }}
-          onMouseMove={onPhotoMove}
-          onMouseLeave={onPhotoLeave}
-          className="relative mx-auto w-full max-w-md"
-        >
-          <div className="rounded-3xl bg-gradient-to-br from-primary via-fuchsia-500 to-cyan-400 p-[2px] shadow-2xl shadow-primary/30">
-            <img
-              src="/images/jihad.png"
-              alt={site.name}
-              className="aspect-[4/5] w-full rounded-3xl object-cover"
-            />
-          </div>
-
-          {/* Floating MERN card */}
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -bottom-5 -left-5 rounded-2xl border border-border bg-card/90 px-5 py-3 shadow-xl backdrop-blur"
-          >
-            <p className="text-sm font-semibold text-foreground">MERN Stack</p>
-            <p className="text-xs text-muted-foreground">Next.js · React · Node</p>
-          </motion.div>
-
-          {/* Orbiting tech badges */}
-          {[
-            { label: "React", pos: "-top-4 -right-4", delay: 0 },
-            { label: "MongoDB", pos: "top-1/2 -right-8", delay: 1.2 },
-            { label: "Node.js", pos: "-top-2 left-8", delay: 2.4 },
-          ].map((b) => (
-            <motion.span
-              key={b.label}
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: b.delay }}
-              className={`absolute ${b.pos} rounded-full border border-border bg-card/90 px-3 py-1 text-xs font-semibold text-foreground shadow-lg backdrop-blur`}
-            >
-              {b.label}
-            </motion.span>
-          ))}
-        </motion.div>
+        {/* Right: photo stage */}
+        <PhotoStage />
       </div>
     </section>
   );
