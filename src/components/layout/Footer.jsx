@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
 import { Github, Linkedin } from "@/components/ui/BrandIcons";
+import CurrentYear from "@/components/ui/CurrentYear";
 import T from "@/components/i18n/T";
 import { site } from "@/data/site";
 
@@ -8,8 +9,6 @@ const iconLink =
   "rounded-full border border-border p-2.5 text-muted-foreground transition hover:-translate-y-0.5 hover:text-foreground";
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="mt-24 border-t border-border bg-card/40">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-10 md:flex-row">
@@ -46,7 +45,7 @@ export default function Footer() {
             </Link>
           </nav>
           <p>
-            © {year} <T en={site.name} bn={site.name_bn} />.{" "}
+            © <CurrentYear /> <T en={site.name} bn={site.name_bn} />.{" "}
             <T en="All rights reserved." bn="সর্বস্বত্ব সংরক্ষিত।" />
           </p>
         </div>

@@ -4,7 +4,6 @@ import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ChatWidget from "@/components/chat/ChatWidget";
-import SplashScreen from "@/components/ui/SplashScreen";
 import RouteProgress from "@/components/ui/RouteProgress";
 import { site } from "@/data/site";
 
@@ -50,37 +49,27 @@ export const metadata = {
   },
 };
 
-// পেজ paint হওয়ার আগেই theme, ভাষা ও splash অবস্থা ঠিক করা, যাতে flash না হয়
-const themeScript = `
+// CSS আসার আগেই background ঠিক থাকে, তাই সাদা পর্দা আসে না
+const criticalCss = `
+html { background: #ffffff; color-scheme: light; }
+html.dark { background: #0b0f1a; color-scheme: dark; }
+`;
+
+// Theme ও ভাষা paint-এর আগেই একবারে ঠিক হয়
+const initScript = `
 (function () {
   try {
+    var html = document.documentElement;
     var t = localStorage.getItem('theme');
     if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    if (t === 'dark') document.documentElement.classList.add('dark');
-  } catch (e) {}
-})();
-`;
+    html.classList.toggle('dark', t === 'dark');
+    html.style.colorScheme = t;
 
-const langScript = `
-(function () {
-  try {
     var l = localStorage.getItem('lang');
     if (l === 'bn') {
-      var h = document.documentElement;
-      h.classList.remove('lang-en');
-      h.classList.add('lang-bn');
-      h.lang = 'bn';
-    }
-  } catch (e) {}
-})();
-`;
-
-// এই session-এ splash আগেই দেখানো হয়ে থাকলে তা লুকিয়ে রাখা
-const splashScript = `
-(function () {
-  try {
-    if (sessionStorage.getItem('splash-seen') === '1') {
-      document.documentElement.classList.add('splash-seen');
+      html.classList.remove('lang-en');
+      html.classList.add('lang-bn');
+      html.lang = 'bn';
     }
   } catch (e) {}
 })();
@@ -94,19 +83,16 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} ${bengali.variable} lang-en h-full antialiased`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <script dangerouslySetInnerHTML={{ __html: langScript }} />
-        <script dangerouslySetInnerHTML={{ __html: splashScript }} />
+        <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
+        <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
-          <SplashScreen>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <ChatWidget />
-            <RouteProgress />
-          </SplashScreen>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <ChatWidget />
+          <RouteProgress />
         </ThemeProvider>
       </body>
     </html>

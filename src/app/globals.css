@@ -15,6 +15,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* ---------- Theme tokens ---------- */
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
@@ -24,6 +25,7 @@
   --border: #e2e8f0;
   --primary: #4f46e5;
   --primary-foreground: #ffffff;
+  color-scheme: light;
 }
 
 .dark {
@@ -35,9 +37,12 @@
   --border: #1f2937;
   --primary: #818cf8;
   --primary-foreground: #0b0f1a;
+  color-scheme: dark;
 }
 
+/* ---------- Base ---------- */
 html {
+  background: var(--background);
   scroll-behavior: smooth;
 }
 
@@ -45,7 +50,6 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
-
 
 /* ---------- Language (EN / বাংলা) ---------- */
 html.lang-en .lang-bn,
@@ -57,14 +61,9 @@ html.lang-bn body {
   font-family: var(--font-bengali), ui-sans-serif, system-ui, sans-serif;
 }
 
-
-
 /* ---------- Print: resume শুধু কাগজে সুন্দর দেখাবে ---------- */
-.no-print {
-  display: block;
-}
-
 @media print {
+  :root,
   html,
   html.dark {
     --background: #ffffff;
@@ -99,9 +98,4 @@ html.lang-bn body {
   .resume-sheet * {
     text-shadow: none !important;
   }
-}
-
-/* ---------- Splash: একবার session-এ দেখানোর পর লুকানো ---------- */
-html.splash-seen .splash-overlay {
-  display: none !important;
 }
