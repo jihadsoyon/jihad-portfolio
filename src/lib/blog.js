@@ -7,22 +7,20 @@ const blogDir = path.join(process.cwd(), "content", "blog");
 export function getAllPosts() {
   if (!fs.existsSync(blogDir)) return [];
 
-  const files = fs.readdirSync(blogDir).filter((f) => f.endsWith(".mdx"));
-
-  return files
+  return fs
+    .readdirSync(blogDir)
+    .filter((f) => f.endsWith(".mdx"))
     .map((file) => {
       const slug = file.replace(/\.mdx$/, "");
       const raw = fs.readFileSync(path.join(blogDir, file), "utf8");
-      const { data } = matter(raw);
-      return { slug, ...data };
+      const { data, content } = matter(raw);
+      return {
+        slug,
+        ...data,
+        readTime: data.readTime ?? `${Math.max(1, Math.round(content.split(/\s+/).length / 200))} min read`,
+      };
     })
     .sort((a, b) => new Date(b.date) - new Date(a.date));
-}
-
-export function getFeaturedPosts(count = 3) {
-  return getAllPosts()
-    .filter((post) => post.featured)
-    .slice(0, count);
 }
 
 export function getPostBySlug(slug) {
@@ -32,4 +30,8 @@ export function getPostBySlug(slug) {
   const raw = fs.readFileSync(file, "utf8");
   const { data, content } = matter(raw);
   return { slug, ...data, content };
+}
+
+export function getFeaturedPosts(count = 3) {
+  return getAllPosts().slice(0, count);
 }
