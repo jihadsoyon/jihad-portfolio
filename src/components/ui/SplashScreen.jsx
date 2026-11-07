@@ -17,7 +17,7 @@ export default function SplashScreen() {
         <span className="splash-orbit" />
         <span className="splash-ring" />
         <div className="splash-photo-inner">
-          <img src="/images/jihad.jpg" alt="" />
+          <img src="/images/jihad.png" alt="" />
         </div>
       </div>
 
