@@ -35,7 +35,7 @@ export default function ResumePage() {
           <a
             href="/resume/jihad-cv.pdf"
             download
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-fuchsia-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:scale-105"
+            className="inline-flex items-center gap-2 my-5 rounded-full bg-gradient-to-r from-primary to-fuchsia-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:scale-105"
           >
             <Download size={16} />
             <T en="Download PDF" bn="PDF ডাউনলোড" />

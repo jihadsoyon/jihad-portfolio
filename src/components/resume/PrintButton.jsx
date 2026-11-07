@@ -7,7 +7,7 @@ export default function PrintButton() {
   return (
     <button
       onClick={() => window.print()}
-      className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted"
+      className="inline-flex items-center gap-2 rounded-full border border-border my-5 px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted"
     >
       <Printer size={16} />
       <T en="Print" bn="প্রিন্ট" />

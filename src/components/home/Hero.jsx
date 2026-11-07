@@ -1,11 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, Mail } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
+import { ArrowRight, FileText } from "lucide-react";
 import { Github, Linkedin } from "@/components/ui/BrandIcons";
 import T from "@/components/i18n/T";
 import { site } from "@/data/site";
+
+const roles = [
+  { en: "MERN Stack Developer", bn: "MERN স্ট্যাক ডেভেলপার" },
+  { en: "Next.js Engineer", bn: "Next.js ইঞ্জিনিয়ার" },
+  { en: "Full-Stack Problem Solver", bn: "ফুল-স্ট্যাক সমস্যা সমাধানকারী" },
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -24,11 +37,54 @@ const reveal = (i) => ({
 });
 
 export default function Hero() {
+  // Mouse spotlight
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const spotX = useSpring(mouseX, { stiffness: 120, damping: 20 });
+  const spotY = useSpring(mouseY, { stiffness: 120, damping: 20 });
+  const spotlight = useMotionTemplate`radial-gradient(600px circle at ${spotX}px ${spotY}px, rgba(129,140,248,0.18), transparent 70%)`;
+
+  // Photo 3D tilt
+  const rotX = useMotionValue(0);
+  const rotY = useMotionValue(0);
+  const tiltX = useSpring(rotX, { stiffness: 150, damping: 15 });
+  const tiltY = useSpring(rotY, { stiffness: 150, damping: 15 });
+
+  // Role rotation
+  const [roleIndex, setRoleIndex] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setRoleIndex((i) => (i + 1) % roles.length), 2800);
+    return () => clearInterval(id);
+  }, []);
+
+  const onSectionMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
+
+  const onPhotoMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    rotY.set(px * 14);
+    rotX.set(-py * 14);
+  };
+
+  const onPhotoLeave = () => {
+    rotX.set(0);
+    rotY.set(0);
+  };
+
   return (
-    <section className="relative isolate overflow-hidden">
-      {/* Animated background */}
+    <section onMouseMove={onSectionMove} className="relative isolate overflow-hidden">
+      {/* Background */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[size:48px_48px] bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+        <motion.div
+          style={{ background: spotlight }}
+          className="absolute inset-0"
+        />
         <motion.div
           animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
@@ -55,19 +111,33 @@ export default function Hero() {
             <T en="Open to remote opportunities" bn="রিমোট কাজের জন্য উন্মুক্ত" />
           </motion.span>
 
-          <motion.h1 {...reveal(1)} className="mt-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl">
+          <motion.h1
+            {...reveal(1)}
+            className="mt-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl"
+          >
             <T en="Hi, I'm" bn="আসসালামু আলাইকুম, আমি" />{" "}
             <T
               as="span"
-              className="bg-gradient-to-r from-primary to-fuchsia-500 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-primary via-fuchsia-500 to-cyan-400 bg-clip-text text-transparent"
               en={site.name}
               bn={site.name_bn}
             />
           </motion.h1>
 
-          <motion.p {...reveal(2)} className="mt-4 text-xl font-medium text-primary">
-            <T en={site.designation} bn={site.designation_bn} />
-          </motion.p>
+          {/* Rotating role */}
+          <motion.div {...reveal(2)} className="mt-4 h-8 overflow-hidden text-xl font-medium text-primary">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={roleIndex}
+                initial={{ y: 24, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -24, opacity: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <T en={roles[roleIndex].en} bn={roles[roleIndex].bn} />
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
 
           <motion.p {...reveal(3)} className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
             <T en={site.tagline} bn={site.tagline_bn} />
@@ -82,11 +152,11 @@ export default function Hero() {
               <ArrowRight size={18} className="transition group-hover:translate-x-1" />
             </Link>
             <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold text-foreground transition hover:bg-muted"
+              href="/resume"
+              className="group inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold text-foreground transition hover:border-primary/60 hover:bg-muted"
             >
-              <Mail size={18} />
-              <T en="Contact me" bn="যোগাযোগ করুন" />
+              <FileText size={18} className="transition group-hover:-translate-y-0.5" />
+              <T en="Resume" bn="রিজিউমে" />
             </Link>
           </motion.div>
 
@@ -112,11 +182,14 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right: photo */}
+        {/* Right: 3D tilt photo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          style={{ rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 }}
+          onMouseMove={onPhotoMove}
+          onMouseLeave={onPhotoLeave}
           className="relative mx-auto w-full max-w-md"
         >
           <div className="rounded-3xl bg-gradient-to-br from-primary via-fuchsia-500 to-cyan-400 p-[2px] shadow-2xl shadow-primary/30">
@@ -127,6 +200,7 @@ export default function Hero() {
             />
           </div>
 
+          {/* Floating MERN card */}
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -135,6 +209,22 @@ export default function Hero() {
             <p className="text-sm font-semibold text-foreground">MERN Stack</p>
             <p className="text-xs text-muted-foreground">Next.js · React · Node</p>
           </motion.div>
+
+          {/* Orbiting tech badges */}
+          {[
+            { label: "React", pos: "-top-4 -right-4", delay: 0 },
+            { label: "MongoDB", pos: "top-1/2 -right-8", delay: 1.2 },
+            { label: "Node.js", pos: "-top-2 left-8", delay: 2.4 },
+          ].map((b) => (
+            <motion.span
+              key={b.label}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: b.delay }}
+              className={`absolute ${b.pos} rounded-full border border-border bg-card/90 px-3 py-1 text-xs font-semibold text-foreground shadow-lg backdrop-blur`}
+            >
+              {b.label}
+            </motion.span>
+          ))}
         </motion.div>
       </div>
     </section>
