@@ -49,7 +49,7 @@ export const metadata = {
   },
 };
 
-// পেজ paint হওয়ার আগেই theme ও ভাষা ঠিক করা, যাতে flash না হয়
+// পেজ paint হওয়ার আগেই theme, ভাষা ও splash অবস্থা ঠিক করা, যাতে flash না হয়
 const themeScript = `
 (function () {
   try {
@@ -74,6 +74,17 @@ const langScript = `
 })();
 `;
 
+// এই session-এ splash আগেই দেখানো হয়ে থাকলে তা লুকিয়ে রাখা
+const splashScript = `
+(function () {
+  try {
+    if (sessionStorage.getItem('splash-seen') === '1') {
+      document.documentElement.classList.add('splash-seen');
+    }
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({ children }) {
   return (
     <html
@@ -84,6 +95,7 @@ export default function RootLayout({ children }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script dangerouslySetInnerHTML={{ __html: langScript }} />
+        <script dangerouslySetInnerHTML={{ __html: splashScript }} />
       </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider>

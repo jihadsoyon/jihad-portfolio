@@ -100,3 +100,8 @@ html.lang-bn body {
     text-shadow: none !important;
   }
 }
+
+/* ---------- Splash: একবার session-এ দেখানোর পর লুকানো ---------- */
+html.splash-seen .splash-overlay {
+  display: none !important;
+}
