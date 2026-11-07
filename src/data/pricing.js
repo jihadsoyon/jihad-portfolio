@@ -1,0 +1,53 @@
+// Package-এর তথ্য। দাম, সুবিধা ও বর্ণনা আপনার নিজের মান দিয়ে বদলান।
+export const packages = [
+  {
+    id: "landing",
+    name: "Landing Page",
+    tagline: "Fast, focused and conversion-ready.",
+    price: "40",
+    currency: "$",
+    unit: "per project",
+    features: [
+      "One responsive landing page",
+      "Next.js and Tailwind CSS",
+      "Smooth animations",
+      "Contact form integration",
+      "Basic SEO setup",
+      "One revision round",
+    ],
+    highlight: false,
+  },
+  {
+    id: "web-app",
+    name: "Full Web Application",
+    tagline: "For startups, SaaS and feature-rich products.",
+    price: "79",
+    currency: "$",
+    unit: "per project",
+    features: [
+      "Multi-page web application",
+      "Frontend with React and Next.js",
+      "Authentication and database setup",
+      "API integration and state management",
+      "Fully responsive and performance-tuned",
+      "Priority support and three revisions",
+    ],
+    highlight: true,
+  },
+  {
+    id: "enterprise",
+    name: "Custom Solution",
+    tagline: "Tailored architecture for larger, complex projects.",
+    price: "Custom",
+    currency: "",
+    unit: "",
+    features: [
+      "Custom platform architecture",
+      "Advanced security and data protection",
+      "Scalable, maintainable codebase",
+      "Ongoing maintenance and support",
+      "Dedicated development support",
+    ],
+    highlight: false,
+  },
+];
