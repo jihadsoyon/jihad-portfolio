@@ -18,9 +18,9 @@ export default function RouteProgress() {
       const href = a.getAttribute("href");
       if (!href.startsWith("/") || href.startsWith("//")) return;
       if (a.target === "_blank" || href === pathname) return;
+      if (a.hasAttribute("download") || href.endsWith(".pdf")) return;
 
       setLoading(true);
-      // কোনো কারণে route না বদলালে bar আটকে থাকবে না
       clearTimeout(safety);
       safety = setTimeout(() => setLoading(false), 8000);
     };
