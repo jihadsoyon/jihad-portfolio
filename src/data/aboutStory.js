@@ -1,4 +1,4 @@
-// About page-এর অতিরিক্ত তথ্য। নিচের সব লেখা আপনার আসল তথ্য দিয়ে বদলান।
+// About page-এর অতিরিক্ত তথ্য।
 export const aboutStory = {
   stats: [
     { value: 1, suffix: "+", en: "Years experience", bn: "বছরের অভিজ্ঞতা" },
@@ -6,30 +6,38 @@ export const aboutStory = {
     { value: 8, suffix: "+", en: "Core technologies", bn: "মূল প্রযুক্তি" },
   ],
 
-  // TODO: প্রতিটি ধাপের সময় ও লেখা আপনার আসল যাত্রা অনুযায়ী বদলান
   journey: [
     {
-      period: "2023",
-      title: { en: "Started my coding journey", bn: "কোডিং যাত্রা শুরু" },
+      period: "2023 – 2025",
+      title: {
+        en: "ORM Specialist at Aan-Nahl Software",
+        bn: "Aan-Nahl Software-এ ORM Specialist",
+      },
       text: {
-        en: "Learned the fundamentals of HTML, CSS and JavaScript, and built my first small projects.",
-        bn: "HTML, CSS ও JavaScript-এর মূল ধারণা শিখে প্রথম ছোট project বানালাম।",
+        en: "Built and managed 50+ high-authority profiles on Medium, WordPress, Behance, Webflow and more. Handled off-page SEO, backlinks and content publishing to grow brand visibility, authority and trust, with Asana for task management.",
+        bn: "Medium, WordPress, Behance, Webflow সহ বিভিন্ন platform-এ ৫০+ high-authority profile তৈরি ও পরিচালনা করেছি। Off-page SEO, backlink ও content publishing-এর মাধ্যমে brand-এর visibility, authority ও trust বাড়িয়েছি; task management-এ Asana ব্যবহার করতাম।",
       },
     },
     {
-      period: "2024",
-      title: { en: "Going full-stack with MERN", bn: "MERN দিয়ে full-stack" },
+      period: "2025 – Jul 2026",
+      title: {
+        en: "Switched to programming with MERN",
+        bn: "MERN দিয়ে programming-এ পদার্পণ",
+      },
       text: {
-        en: "Moved into React, Node.js, Express and MongoDB, and started building complete applications.",
-        bn: "React, Node.js, Express ও MongoDB-তে কাজ শুরু করে সম্পূর্ণ application বানাতে শিখলাম।",
+        en: "Moved from digital marketing into software development and learned the MERN stack (React, Node.js, Express and MongoDB) by building as I learned.",
+        bn: "Digital marketing থেকে software development-এ এসে React, Node.js, Express ও MongoDB নিয়ে MERN stack শিখেছি, শেখার সাথে সাথে project বানিয়ে।",
       },
     },
     {
-      period: "2025",
-      title: { en: "Professional development", bn: "পেশাদার উন্নয়ন" },
+      period: "2026",
+      title: {
+        en: "Advanced stack: TypeScript & Next.js",
+        bn: "Advanced stack: TypeScript ও Next.js",
+      },
       text: {
-        en: "Worked on real projects with a focus on performance, clean code and deployment.",
-        bn: "বাস্তব project-এ কাজ করেছি, যেখানে performance, পরিষ্কার code ও deployment-এর দিকে নজর ছিল।",
+        en: "Added TypeScript and Next.js to my toolkit and started building projects on my own, from idea to deployment.",
+        bn: "TypeScript ও Next.js শিখে নিজে নিজে একের পর এক project বানাতে শুরু করেছি, idea থেকে deployment পর্যন্ত।",
       },
     },
     {
@@ -61,5 +69,4 @@ export const aboutStory = {
     en: "Exploring remote opportunities and crafting scalable web applications.",
     bn: "এখন remote কাজের সুযোগ খুঁজছি এবং আধুনিক ও স্কেলেবল web application তৈরি করছি।",
   },
-
 };

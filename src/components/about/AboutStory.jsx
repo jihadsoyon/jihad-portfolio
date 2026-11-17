@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { animate, motion, useInView, useScroll, useSpring } from "framer-motion";
 import { ArrowRight, Code2, ShieldCheck, Zap } from "lucide-react";
-import AboutVideo from "@/components/home/AboutVideo";
+import VideoShowcase from "@/components/about/VideoShowcase";
+import AlbumSlider from "@/components/home/AlbumSlider";
+import AboutHighlights from "@/components/home/AboutHighlights";
 import T from "@/components/i18n/T";
 import { about } from "@/data/about";
 import { aboutStory } from "@/data/aboutStory";
@@ -103,29 +105,27 @@ function SectionHeading({ label, title }) {
 export default function AboutStory() {
   return (
     <div className="space-y-32">
-      {/* ১. পরিচয় */}
-      <section className="grid items-center gap-16 md:grid-cols-2">
+      {/* ১. পরিচয়: বামে Album, ডানে Video + নিচে About Me */}
+      <section className="grid items-start gap-16 md:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <AboutVideo videoId={about.youtubeId} thumbnail={ABOUT_THUMBNAIL} title="About Jihad Soyon" />
+          <AlbumSlider />
         </motion.div>
 
         <div>
-          <T as="span" className="text-xs font-semibold uppercase tracking-[0.3em] text-primary" en="About" bn="পরিচয়" />
           <T
             as="h1"
-            className="mt-4 text-5xl font-bold tracking-tight text-foreground md:text-6xl"
+            className="mb-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl"
             en="About Myself"
             bn="আমার সম্পর্কে"
           />
-          <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted-foreground">
-            {about.paragraphs.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
+          <VideoShowcase videoId={about.youtubeId} thumbnail={ABOUT_THUMBNAIL} title="About Jihad Soyon" />
+          <div className="mt-8">
+            <AboutHighlights />
           </div>
         </div>
       </section>
